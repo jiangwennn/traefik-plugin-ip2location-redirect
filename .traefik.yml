@@ -3,7 +3,7 @@ type: middleware
 
 import: github.com/jiangwennn/traefik-plugin-ip2location-redirect
 
-summary: 'redirect when ip belongs to specific country/region'
+summary: 'Plugins for getting the country code of the client ip from ip2location database and redirect to specific url when (no)match the target countries'
 
 testData:
   regions: ["CN", "TW", "HK"]

@@ -1,6 +1,6 @@
 # ip2location redirect
 
-Plugins for getting information from ip2location database and redirect to specific url
+Plugins for getting the country code of the client ip from ip2location database and redirect to specific url when (no)match the target countries
 
 
 Configuration
