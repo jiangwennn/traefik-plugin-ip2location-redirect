@@ -1,7 +1,7 @@
 displayName: IP2location Redirect
 type: middleware
 
-import: github.com/jiangwennn/traefik-plugin-ip2location-redirect
+import: github.com/jiangwennn/traefik_plugin_ip2location_redirect
 
 summary: 'Plugins for getting the country code of the client ip from ip2location database and redirect to specific url when (no)match the target countries'
 
