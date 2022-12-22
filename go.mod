@@ -1,3 +1,3 @@
-module traefik_plugin_ip2location_redirect
+module github.com/jiangwennn/traefik-plugin-ip2location-redirect
 
 go 1.17
