@@ -1,4 +1,4 @@
-displayName: traefik-plugin-ip2location-redirect
+displayName: IP2location Redirect
 type: middleware
 
 import: github.com/jiangwennn/traefik-plugin-ip2location-redirect
