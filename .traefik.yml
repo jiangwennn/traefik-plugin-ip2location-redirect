@@ -1,0 +1,15 @@
+displayName: traefik-plugin-ip2location-redirect
+type: middleware
+
+import: github.com/jiangwennn/traefik-plugin-ip2location-redirect
+
+summary: 'redirect when ip belongs to specific country/region'
+
+testData:
+  regions: ["CN", "TW", "HK"]
+  redirectUrl: http://github.com
+  noMatch: false
+  permanent: false
+  fromHeader: X-Client-Ip
+  disableErrorHeader: false
+
