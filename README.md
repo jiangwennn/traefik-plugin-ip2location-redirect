@@ -26,7 +26,6 @@ http:
     my-plugin:
       plugin:
         ip2location_redirect:
-          filename: path/to/database.bin
           regions: ["CN"],
           redirectUrl: "https://github.com"
           noMatch: false # optional
@@ -38,12 +37,6 @@ http:
 
 Options
 ---
-
-### Filename 
-
-`filename` | `string` | *Required* 
-
-The path to ip2location database file (in binary format) 
 
 ### Regions
 
