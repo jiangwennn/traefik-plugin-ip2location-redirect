@@ -20,7 +20,7 @@ func TestIP2LocationRedirect(t *testing.T) {
 		},
 	}
 
-	i.db, err = OpenDB("./IP2LOCATION-LITE-DB1.IPV6.BIN")
+	i.db, err = OpenDB("IP2LOCATION-LITE-DB1.IPV6.BIN")
 	if err != nil {
 		t.Fatal(err)
 	}

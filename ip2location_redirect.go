@@ -36,7 +36,7 @@ type IP2LocationRedirect struct {
 }
 
 func New(_ context.Context, next http.Handler, config *Config, name string) (http.Handler, error) {
-	db, err := OpenDB("./IP2LOCATION-LITE-DB1.IPV6.BIN")
+	db, err := OpenDB("IP2LOCATION-LITE-DB1.IPV6.BIN")
 	if err != nil {
 		return nil, fmt.Errorf("error open database file, %w", err)
 	}
