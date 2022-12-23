@@ -9,6 +9,8 @@ import (
 
 
 type Config struct {
+	// ip2location bin文件路径
+	Filename string `json:"filename"`
 	// 地区缩写，多个地区以英文逗号分隔，如 CN,TW,HK,US,UK
 	Regions []string `json:"regions"`
 	// 跳转的url地址
@@ -36,7 +38,7 @@ type IP2LocationRedirect struct {
 }
 
 func New(_ context.Context, next http.Handler, config *Config, name string) (http.Handler, error) {
-	db, err := OpenDB("IP2LOCATION-LITE-DB1.IPV6")
+	db, err := OpenDB(config.Filename)
 	if err != nil {
 		return nil, fmt.Errorf("error open database file, %w", err)
 	}

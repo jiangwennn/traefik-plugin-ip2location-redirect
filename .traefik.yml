@@ -6,6 +6,7 @@ import: github.com/jiangwennn/traefik-plugin-ip2location-redirect
 summary: 'Plugins for getting the country code of the client ip from ip2location database and redirect to specific url when (no)match the target countries'
 
 testData:
+  filename: "IP2LOCATION-LITE-DB1.IPV6.BIN"
   regions: ["CN", "TW", "HK"]
   redirectUrl: http://github.com
   noMatch: false

@@ -15,12 +15,13 @@ func TestIP2LocationRedirect(t *testing.T) {
 	i := &IP2LocationRedirect{
 		next: &httpHandlerMock{},
 		config: &Config{
+			Filename: "IP2LOCATION-LITE-DB1.IPV6.BIN",
 			Regions: []string{"CN", "HK"},
 			RedirectUrl: "https://github.com/jiangwennn/traefik_plugin_ip2location_redirect",
 		},
 	}
 
-	i.db, err = OpenDB("IP2LOCATION-LITE-DB1.IPV6.BIN")
+	i.db, err = OpenDB(i.config.Filename)
 	if err != nil {
 		t.Fatal(err)
 	}
