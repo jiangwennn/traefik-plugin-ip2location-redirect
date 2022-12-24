@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net"
 	"net/http"
+	"os"
 )
 
 
@@ -23,6 +24,8 @@ type Config struct {
 	FromHeader string `json:"fromHeader,omitempty"`
 	// 是否禁用出错时头信息，默认false
 	DisableErrorHeader bool `json:"disableErrorHeader,omitempty"`
+	// 错误头信息字段名称
+	ErrorHeader string `json:"errorHeader"`
 }
 
 
@@ -40,7 +43,12 @@ type IP2LocationRedirect struct {
 func New(_ context.Context, next http.Handler, config *Config, name string) (http.Handler, error) {
 	db, err := OpenDB(config.Filename)
 	if err != nil {
+		os.Stderr.WriteString(fmt.Sprintf("plugin ip2location redirect error, error open database file, %s\n", err))
 		return nil, fmt.Errorf("error open database file, %w", err)
+	}
+
+	if config.ErrorHeader == "" {
+		config.ErrorHeader = "X-IP2LOCATION-REDIRECT-ERROR"
 	}
 
 	return &IP2LocationRedirect{
@@ -55,8 +63,21 @@ func New(_ context.Context, next http.Handler, config *Config, name string) (htt
 func (a *IP2LocationRedirect) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 	ip, err := a.getIP(req)
 	if err != nil {
+		os.Stderr.WriteString(fmt.Sprintf("plugin ip2location redirect error get ip, %s\n", err))
 		if !a.config.DisableErrorHeader {
-			req.Header.Add("X-IP2LOCATION-REDIRECT-ERROR", err.Error())
+			req.Header.Add(a.config.ErrorHeader, err.Error())
+			rw.Header().Add(a.config.ErrorHeader, err.Error())
+		}
+		a.next.ServeHTTP(rw,req)
+		return
+	}
+
+	if ip.String() == "<nil>" {
+		msg := "plugin ip2location redirect get ip <nil>"
+		os.Stderr.WriteString(msg + "\n")
+		if !a.config.DisableErrorHeader {
+			req.Header.Add(a.config.ErrorHeader, msg)
+			rw.Header().Add(a.config.ErrorHeader, msg)
 		}
 		a.next.ServeHTTP(rw,req)
 		return
@@ -64,8 +85,10 @@ func (a *IP2LocationRedirect) ServeHTTP(rw http.ResponseWriter, req *http.Reques
 
 	record, err := a.db.Get_all(ip.String())
 	if err != nil {
+		os.Stderr.WriteString(fmt.Sprintf("plugin ip2location redirect error get record, %s\n", err))
 		if !a.config.DisableErrorHeader {
-			req.Header.Add("X-IP2LOCATION-REDIRECT-ERROR", err.Error())
+			req.Header.Add(a.config.ErrorHeader, err.Error())
+			rw.Header().Add(a.config.FromHeader, err.Error())
 		}
 		a.next.ServeHTTP(rw,req)
 		return

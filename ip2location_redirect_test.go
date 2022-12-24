@@ -18,6 +18,7 @@ func TestIP2LocationRedirect(t *testing.T) {
 			Filename: "IP2LOCATION-LITE-DB1.IPV6.BIN",
 			Regions: []string{"CN", "HK"},
 			RedirectUrl: "https://github.com/jiangwennn/traefik_plugin_ip2location_redirect",
+			ErrorHeader: "X-IP2LOCATION-REDIRECT-ERROR",
 		},
 	}
 
