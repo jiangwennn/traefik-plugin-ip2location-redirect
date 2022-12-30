@@ -6,6 +6,7 @@ import (
 	"net"
 	"net/http"
 	"os"
+	"strings"
 )
 
 
@@ -119,7 +120,8 @@ func (a *IP2LocationRedirect) ServeHTTP(rw http.ResponseWriter, req *http.Reques
 
 func (a *IP2LocationRedirect) getIP(req *http.Request) (net.IP, error) {
 	if a.config.FromHeader != "" {
-		return net.ParseIP(req.Header.Get(a.config.FromHeader)), nil
+		ip := strings.TrimSpace(strings.Split(req.Header.Get(a.config.FromHeader), ",")[0])
+		return net.ParseIP(ip), nil
 	}
 
 	addr, _, err := net.SplitHostPort(req.RemoteAddr)
